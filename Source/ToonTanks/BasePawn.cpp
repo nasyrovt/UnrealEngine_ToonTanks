@@ -41,7 +41,8 @@ void ABasePawn::Fire()
 	Projectile->SetOwner(this);
 }
 
-void ABasePawn::HandleDistruction()
+void ABasePawn::HandleDestruction()
 {
 	// TODO: VFX/SFX
+	UE_LOG(LogTemp, Warning, TEXT("HandleDestruction of BasePawn class"));
 }

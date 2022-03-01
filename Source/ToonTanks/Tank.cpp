@@ -3,7 +3,7 @@
 
 #include "Tank.h"
 
-#include "DrawDebugHelpers.h"
+
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
@@ -39,15 +39,13 @@ void ATank::Tick(float DeltaTime)
             ECollisionChannel::ECC_Visibility, 
             false, 
             HitResult);
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 5.f,
-            12, FColor::Red, false, -1.f);
         RotateTurret(HitResult.ImpactPoint);
     }
 }
 
-void ATank::HandleDistruction()
+void ATank::HandleDestruction()
 {
-    Super::HandleDistruction();
+    Super::HandleDestruction();
 
     SetActorHiddenInGame(true);
     SetActorTickEnabled(false);

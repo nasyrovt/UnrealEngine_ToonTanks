@@ -15,7 +15,7 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
-	void HandleDistruction();
+	void HandleDestruction();
 
 protected:
 
