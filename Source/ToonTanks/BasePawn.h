@@ -15,6 +15,8 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
+	void HandleDistruction();
+
 protected:
 
 	void RotateTurret(FVector LookAtTarget);
@@ -38,4 +40,5 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class AProjectile> ProjectileClass;
+
 };
