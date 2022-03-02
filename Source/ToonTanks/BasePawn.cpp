@@ -5,6 +5,9 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Projectile.h"
+#include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Particles/ParticleSystem.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -44,5 +47,12 @@ void ABasePawn::Fire()
 void ABasePawn::HandleDestruction()
 {
 	// TODO: VFX/SFX
-	UE_LOG(LogTemp, Warning, TEXT("HandleDestruction of BasePawn class"));
+	if(DeathParticles)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(
+			this,
+			DeathParticles,
+			GetActorLocation(),
+			GetActorRotation());
+	}
 }

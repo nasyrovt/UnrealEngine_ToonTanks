@@ -32,10 +32,16 @@ private:
 		AActor *OtherActor,
 		UPrimitiveComponent *OtherComp,
 		FVector NormalImpulse,
-		const FHitResult& Hit);
+		const FHitResult &Hit);
 
 	UPROPERTY(EditAnywhere)
 	float Damage = 50.f;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	class UParticleSystem *HitParticles;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	class UParticleSystemComponent* TrailParticleSystem;
 
 public:	
 	// Called every frame
