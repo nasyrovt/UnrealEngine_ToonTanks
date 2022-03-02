@@ -32,7 +32,8 @@ void AProjectile::BeginPlay()
 
 	//bound function OnHit to hit events on ProjectileMesh
 	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
-	
+
+	UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
 }
 
 // Called every frame
@@ -44,15 +45,15 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	auto MyOwner = GetOwner();
+	AActor* MyOwner = GetOwner();
 	if(MyOwner == nullptr)
 	{
 		Destroy();
 		return;
 	}
 
-	auto MyOwnerInstigator = MyOwner->GetInstigatorController();
-	auto DamageTypeClass = UDamageType::StaticClass();
+	AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
+	UClass* DamageTypeClass = UDamageType::StaticClass();
 
 	if(OtherActor && OtherActor!=this && OtherActor != MyOwner)
 	{
@@ -65,9 +66,19 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 				GetActorLocation(),
 				GetActorRotation());
 		}
-		Destroy();
+		if(HitSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(
+				this,
+				HitSound,
+				GetActorLocation());
+		}
+		if(HitCameraShakeClass)
+		{
+			//UE4.25 - ClientPlayCameraShake; UE4.26+ ClientStartCameraShake
+			GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(HitCameraShakeClass);
+		}
 	}
-
 	Destroy();
 
 }
